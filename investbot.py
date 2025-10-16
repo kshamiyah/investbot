@@ -1,5 +1,6 @@
 # VIP InvestBot - Professional 24/7 Investment Monitoring (STATEFUL - NO REPEATS)
 # Only sends alerts for REAL events + daily summary if calm
+# Updated: January 2025 - Clean version without debug lines
 
 import requests
 import json
@@ -218,7 +219,7 @@ class VIPInvestBot:
         except Exception as e:
             print(f"❌ Failed to send alert: {e}")
             return False
-    
+
     def get_company_name(self, ticker):
         company_names = {
             'AAPL': 'Apple Inc.', 'MSFT': 'Microsoft Corporation', 'GOOGL': 'Alphabet Inc.', 'GOOG': 'Alphabet Inc.', 'AMZN': 'Amazon.com Inc.', 'TSLA': 'Tesla Inc.', 'NVDA': 'NVIDIA Corporation', 'META': 'Meta Platforms Inc.', 'BRK-B': 'Berkshire Hathaway', 'JPM': 'JPMorgan Chase & Co.', 'JNJ': 'Johnson & Johnson', 'PG': 'Procter & Gamble', 'HD': 'The Home Depot', 'BAC': 'Bank of America', 'UNH': 'UnitedHealth Group', 'V': 'Visa Inc.', 'MA': 'Mastercard Inc.', 'WMT': 'Walmart Inc.', 'DIS': 'The Walt Disney Company', 'NFLX': 'Netflix Inc.', 'CRM': 'Salesforce Inc.', 'ADBE': 'Adobe Inc.', 'ORCL': 'Oracle Corporation', 'CSCO': 'Cisco Systems', 'INTC': 'Intel Corporation', 'AMD': 'Advanced Micro Devices', 'QCOM': 'QUALCOMM Inc.', 'TXN': 'Texas Instruments', 'AVGO': 'Broadcom Inc.', 'HON': 'Honeywell International', 'CAT': 'Caterpillar Inc.', 'BA': 'The Boeing Company', 'GE': 'General Electric', 'MMM': '3M Company', 'KO': 'The Coca-Cola Company', 'PEP': 'PepsiCo Inc.', 'MCD': 'McDonald\'s Corporation', 'NKE': 'NIKE Inc.', 'SBUX': 'Starbucks Corporation'
@@ -438,7 +439,7 @@ class VIPInvestBot:
                 if self.send_telegram_alert(alert_message, urgency):
                     for move in big_moves: mark_alert_as_sent(move['alert_key'])
                     alerts_sent_this_run += 1
-
+        
         # Check 3: Send daily summary if no alerts were sent
         if alerts_sent_this_run == 0:
             self.send_daily_summary()
